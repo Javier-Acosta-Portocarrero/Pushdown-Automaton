@@ -17,9 +17,9 @@ build/%.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf build/* $(TARGET)
+	rm -rf build/*
 
 cleano:
-	rm -rf build/*
+	rm -rf build/src
 
 .PHONY: all clean cleano
