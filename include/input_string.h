@@ -1,0 +1,29 @@
+// University of La Laguna
+// School of Engineering and Technology
+// Bachelor's Degree in Computer Engineering
+// Course: Computational Complexity
+// Year: 4th
+// Assignment 1: Pushdown Automaton
+// Author: Javier Acosta Portocarrero
+// Date: 20/09/2026
+// File input_string.h: declaration file.
+// Contains the declaration of the InputString class.
+
+#include <string>
+
+using Symbol = char;
+
+class InputString {
+ public:
+  InputString() = default;
+  InputString(const std::string& input_word) : inner_string_{&input_word} {}
+
+  Symbol GetCurrentSymbol() const;
+  void AdvanceString();
+  bool IsEmpty() const;
+
+  void IntroduceNewInputWord(const std::string& input_word);
+ private:
+  const std::string* inner_string_ = nullptr;
+  unsigned current_position_ = 0;
+};
