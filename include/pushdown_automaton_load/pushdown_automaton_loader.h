@@ -10,7 +10,7 @@
 // Contains the declaration of the PushdownAutomatonLoader class.
 
 #include "../pushdown_automaton.h"
-#include "pushdown_automaton_loader_strategy..h"
+#include "pushdown_automaton_loader_strategy.h"
 
 class PushdownAutomatonLoader {
  public:

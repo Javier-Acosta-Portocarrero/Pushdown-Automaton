@@ -8,3 +8,13 @@
 // Date: 24/09/2026
 // File pushdown_automaton_loader_plain_text_strategy.h: declaration file.
 // Contains the declaration of the PushdownAutomatonLoaderPlainTextStrategy class.
+
+#include "pushdown_automaton_loader_strategy.h"
+
+class PushdownAutomatonLoaderPlainTextStrategy: PushdownAutomatonLoaderStrategy {
+ public:
+  PushdownAutomatonLoaderPlainTextStrategy() = default;
+  ~PushdownAutomatonLoaderPlainTextStrategy() = default;
+
+  PushdownAutomaton LoadPushdownAutomaton(const std::string& file_path) const override;
+};
