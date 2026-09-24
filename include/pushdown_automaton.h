@@ -45,7 +45,7 @@ class PushdownAutomaton {
   const std::string start_state_;
   bool trace_active_;
 
-  bool RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string) const;
+  bool RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string, unsigned output_width) const;
 };
 
 #endif

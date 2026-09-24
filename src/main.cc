@@ -21,6 +21,8 @@
  * @brief Main function of the pushdown automaton simulator.
  */
 int main(int argc, char* argv[]) {
+  bool parameter_error = false;
+
   try {
     std::string config_file;
     std::string input_file;
@@ -30,12 +32,14 @@ int main(int argc, char* argv[]) {
       const std::string argument = argv[i];
       if (argument == "-config") {
         if (i + 1 >= argc) {
+          parameter_error = true;
           throw std::runtime_error("Missing file after -config.");
         }
         config_file = argv[++i];
 
       } else if (argument == "-trace") {
         if (i + 1 >= argc) {
+          parameter_error = true;
           throw std::runtime_error("Missing value after -trace.");
         }
         const std::string trace_value = argv[++i];
@@ -44,24 +48,29 @@ int main(int argc, char* argv[]) {
         } else if (trace_value == "n") {
           trace_active = false;
         } else {
+          parameter_error = true;
           throw std::runtime_error("Trace value must be 'y' or 'n'.");
         }
         trace_option_found = true;
 
       } else if (argument == "-in") {
         if (i + 1 >= argc) {
+          parameter_error = true;
           throw std::runtime_error("Missing file after -in.");
         }
         input_file = argv[++i];
 
       } else {
+        parameter_error = true;
         throw std::runtime_error("Unknown option '" + argument + "'.");
       }
     }
     if (config_file.empty()) {
+      parameter_error = true;
       throw std::runtime_error("Missing -config option.");
     }
     if (!trace_option_found) {
+      parameter_error = true;
       throw std::runtime_error("Missing -trace option.");
     }
 
@@ -69,7 +78,6 @@ int main(int argc, char* argv[]) {
     PushdownAutomatonLoader loader{&plain_text_strategy, config_file};
     PushdownAutomaton automaton = loader.LoadPushdownAutomaton();
     automaton.SetTraceActive(trace_active);
-
     if (!input_file.empty()) {
       std::ifstream words_file{input_file};
       if (!words_file.is_open()) {
@@ -86,7 +94,7 @@ int main(int argc, char* argv[]) {
     } else {
       std::string input_word;
       while (true) {
-        std::cout << "Input word (type exit to finish): ";
+        std::cout << "\nInput word (type exit to finish): ";
         std::cin >> input_word;
         if (input_word == "exit") {
           break;
@@ -94,10 +102,14 @@ int main(int argc, char* argv[]) {
         std::cout << (automaton.AcceptsWord(input_word) ? "Accepted" : "Rejected") << std::endl;
       }
     }
-
     return 0;
+
   } catch (const std::exception& exception) {
     std::cerr << "Error: " << exception.what() << std::endl;
+    if (parameter_error) {
+      std::cerr << "\nUsage:\n";
+      std::cerr << "  " << argv[0] << " -config <file> -trace <y|n> [-in <file>]\n";
+    }
     return 1;
   }
 }
