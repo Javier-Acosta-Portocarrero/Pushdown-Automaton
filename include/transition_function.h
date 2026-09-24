@@ -18,11 +18,12 @@ using Symbol = char;
 
 class TransitionFunction {
  public:
+  TransitionFunction() = default;
   TransitionFunction(const std::map<std::string, std::map<Symbol, std::multimap<Symbol, TransitionEffects>>>& transition_table) 
       :  inner_transition_table_{transition_table} {}
 
-  std::set<TransitionEffects> GetPossibleTransitions(const std::string& state, Symbol stack_top_, Symbol entry_symbol) const;
-  void AddNewTransition(const std::string& state, Symbol stack_top_, Symbol entry_symbol, const TransitionEffects& output_);
+  std::set<TransitionEffects> GetPossibleTransitions(const std::string& state, Symbol stack_top, Symbol entry_symbol) const;
+  void AddNewTransition(const std::string& state, Symbol stack_top, Symbol entry_symbol, const TransitionEffects& output);
  private:
   std::map<std::string, std::map<Symbol, std::multimap<Symbol, TransitionEffects>>> inner_transition_table_;
 };
