@@ -44,7 +44,7 @@ bool InputString::IsEmpty() const {
  *
  * @param input_word New input word.
  */
-void InputString::IntroduceNewInputWord(const std::string& input_word) {
+void InputString::IntroduceNewInputWordByReference(const std::string& input_word) {
   inner_string_ = &input_word;
   current_position_ = 0;
 }

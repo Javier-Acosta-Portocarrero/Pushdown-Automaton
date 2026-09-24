@@ -19,10 +19,11 @@ class InputString {
   InputString(const std::string& input_word) : inner_string_{&input_word} {}
 
   Symbol GetCurrentSymbol() const;
+  const std::string& GetInputWordReference() const { return *inner_string_;}
   void AdvanceString();
   bool IsEmpty() const;
 
-  void IntroduceNewInputWord(const std::string& input_word);
+  void IntroduceNewInputWordByReference(const std::string& input_word);
  private:
   const std::string* inner_string_ = nullptr;
   unsigned current_position_ = 0;
