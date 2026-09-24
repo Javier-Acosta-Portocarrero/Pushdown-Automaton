@@ -17,7 +17,7 @@ struct InstantaneousDescription {
   InstantaneousDescription(const std::string& state, Symbol stack_top, Symbol entry_symbol) 
       : state_{state}, stack_top_{stack_top}, entry_symbol_{entry_symbol} {}
   
-  const std::string state_;
+  const std::string& state_;
   const Symbol stack_top_;
   const Symbol entry_symbol_;  
 };

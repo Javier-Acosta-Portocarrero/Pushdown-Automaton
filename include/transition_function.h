@@ -10,6 +10,7 @@
 // Contains the declaration of the TransitionFunction class.
 
 #include "transition_effects.h"
+#include "instantaneous_description.h"
 
 #include <map>
 #include <set>
@@ -23,7 +24,7 @@ class TransitionFunction {
       :  inner_transition_table_{transition_table} {}
 
   std::set<TransitionEffects> GetPossibleTransitions(const std::string& state, Symbol stack_top, Symbol entry_symbol) const;
-  void AddNewTransition(const std::string& state, Symbol stack_top, Symbol entry_symbol, const TransitionEffects& output);
+  void AddNewTransition(const InstantaneousDescription& requirements, const TransitionEffects& output);
  private:
   std::map<std::string, std::map<Symbol, std::multimap<Symbol, TransitionEffects>>> inner_transition_table_;
 };

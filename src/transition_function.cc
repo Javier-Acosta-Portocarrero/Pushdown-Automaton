@@ -43,6 +43,6 @@ std::set<TransitionEffects> TransitionFunction::GetPossibleTransitions(const std
 /**
  * 
  */
-void TransitionFunction::AddNewTransition(const std::string& state, Symbol stack_top, Symbol entry_symbol, const TransitionEffects& output) {
-  inner_transition_table_[state][stack_top].insert(std::make_pair(entry_symbol, output)); 
+void TransitionFunction::AddNewTransition(const InstantaneousDescription& requirements, const TransitionEffects& output) {
+  inner_transition_table_[requirements.state_][requirements.stack_top_].insert(std::make_pair(requirements.entry_symbol_, output)); 
 }
