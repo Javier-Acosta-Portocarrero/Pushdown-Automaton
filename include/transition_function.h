@@ -9,6 +9,9 @@
 // File transition_function.h: declaration file.
 // Contains the declaration of the TransitionFunction class.
 
+#ifndef TRANSITION_FUNCTION_H
+#define TRANSITION_FUNCTION_H
+
 #include "transition_effects.h"
 #include "instantaneous_description.h"
 
@@ -28,3 +31,5 @@ class TransitionFunction {
  private:
   std::map<std::string, std::map<Symbol, std::multimap<Symbol, TransitionEffects>>> inner_transition_table_;
 };
+
+#endif

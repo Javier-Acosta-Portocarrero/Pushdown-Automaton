@@ -9,6 +9,9 @@
 // File pushdown_automaton_loader_plain_text_strategy.h: declaration file.
 // Contains the declaration of the PushdownAutomatonLoaderPlainTextStrategy class.
 
+#ifndef PUSHDOWN_AUTOMATON_LOADER_PLAIN_TEXT_STRATEGY_H
+#define PUSHDOWN_AUTOMATON_LOADER_PLAIN_TEXT_STRATEGY_H
+
 #include "pushdown_automaton_loader_strategy.h"
 
 class PushdownAutomatonLoaderPlainTextStrategy : public PushdownAutomatonLoaderStrategy {
@@ -28,3 +31,5 @@ class PushdownAutomatonLoaderPlainTextStrategy : public PushdownAutomatonLoaderS
       const std::set<std::string>& automaton_states, const std::set<Symbol>& input_alphabet, 
       const std::set<Symbol>& stack_alphabet,TransitionFunction& transition_function) const;
 };
+
+#endif 

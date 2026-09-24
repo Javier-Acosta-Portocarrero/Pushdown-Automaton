@@ -9,6 +9,9 @@
 // File transition.h: declaration file.
 // Contains the declaration of the Transition class.
 
+#ifndef TRANSITION_EFFECT_H
+#define TRANSITION_EFFECT_H
+
 #include <string>
 
 using Symbol = char;
@@ -32,3 +35,5 @@ class TransitionEffects {
   unsigned identifier_;
   bool entry_symbol_consumed_ = true;
 };
+
+#endif

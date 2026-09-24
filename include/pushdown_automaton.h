@@ -9,6 +9,9 @@
 // File pushdown_automaton.h: declaration file.
 // Contains the declaration of the PushdownAutomaton class.
 
+#ifndef PUSHDOWN_AUTOMATON_H
+#define PUSHDOWN_AUTOMATON_H
+
 #include "transition_function.h"
 #include "input_string.h"
 #include "instantaneous_description.h"
@@ -30,6 +33,7 @@ class PushdownAutomaton {
       automaton_states_{automaton_states}, start_state_{start_state}, trace_active_{trace_active} {}
 
   bool AcceptsWord(const std::string& input_word);
+  void SetTraceActive(bool trace_flag) { trace_active_ = trace_flag;}
       
  private:
   //const InputString original_input_string_;
@@ -43,3 +47,5 @@ class PushdownAutomaton {
 
   bool RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string) const;
 };
+
+#endif

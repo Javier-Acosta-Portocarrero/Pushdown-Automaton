@@ -9,6 +9,9 @@
 // File pushdown_automaton_loader.h: declaration file.
 // Contains the declaration of the PushdownAutomatonLoader class.
 
+#ifndef PUSHDOWN_AUTOMATON_LOADER_H
+#define PUSHDOWN_AUTOMATON_LOADER_H
+
 #include "../pushdown_automaton.h"
 #include "pushdown_automaton_loader_strategy.h"
 
@@ -23,3 +26,5 @@ class PushdownAutomatonLoader {
   PushdownAutomatonLoaderStrategy* load_strategy_ = nullptr;
   std::string file_path_;
 };
+
+#endif

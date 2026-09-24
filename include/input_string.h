@@ -9,6 +9,9 @@
 // File input_string.h: declaration file.
 // Contains the declaration of the InputString class.
 
+#ifndef INPUT_STRING_H
+#define INPUT_STRING_H
+
 #include <string>
 
 using Symbol = char;
@@ -32,3 +35,5 @@ class InputString {
   const std::string* inner_string_ = nullptr;
   unsigned current_position_ = 0;
 };
+
+#endif

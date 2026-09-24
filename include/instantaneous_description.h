@@ -9,6 +9,9 @@
 // File instantaneous_description.h: declaration file.
 // Contains the declaration of the InstantaneousDescription struct.
 
+#ifndef INSTANTANEOUS_DESCRIPTION_H
+#define INSTANTANEOUS_DESCRIPTION_H
+
 #include <string>
 
 using Symbol = char;
@@ -21,3 +24,5 @@ struct InstantaneousDescription {
   const Symbol stack_top_;
   const Symbol entry_symbol_;  
 };
+
+#endif
