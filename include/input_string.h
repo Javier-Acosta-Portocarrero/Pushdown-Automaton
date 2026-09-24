@@ -15,11 +15,15 @@ using Symbol = char;
 
 class InputString {
  public:
-  InputString() = default;
-  InputString(const std::string& input_word) : inner_string_{&input_word} {}
+  InputString();
+  InputString(const std::string& input_word, unsigned current_position = 0) 
+      : inner_string_{&input_word}, current_position_{current_position} {}
 
   Symbol GetCurrentSymbol() const;
   const std::string& GetInputWordReference() const { return *inner_string_;}
+  InputString GewStringCopyWithReference() const;
+  unsigned GetCurrentPositionIndex() const { return current_position_;}
+
   void AdvanceString();
   bool IsEmpty() const;
 

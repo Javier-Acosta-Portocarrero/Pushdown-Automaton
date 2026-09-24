@@ -15,26 +15,29 @@
 /**
  * 
  */
-std::set<TransitionEffects> TransitionFunction::GetPossibleTransitions(const std::string& state, Symbol stack_top, Symbol entry_symbol) const {
-  auto state_iterator = inner_transition_table_.find(state);
+std::set<TransitionEffects> TransitionFunction::GetPossibleTransitions(const InstantaneousDescription& requirements) const {
+  auto state_iterator = inner_transition_table_.find(requirements.state_);
   if (state_iterator == inner_transition_table_.end()) {
     return {};
   }
 
-  auto stack_top_iterator = state_iterator->second.find(stack_top);
-  if (stack_top_iterator == inner_transition_table_.at(state).end()) {
+  auto stack_top_iterator = state_iterator->second.find(requirements.stack_top_);
+  if (stack_top_iterator == inner_transition_table_.at(requirements.state_).end()) {
     return {};
   }
 
   std::set<TransitionEffects> possible_transitions = {};
-  auto entry_symbol_range = stack_top_iterator->second.equal_range(entry_symbol);
+  auto entry_symbol_range = stack_top_iterator->second.equal_range(requirements.entry_symbol_);
   for (auto iterator = entry_symbol_range.first; iterator != entry_symbol_range.second; ++iterator) {
     possible_transitions.insert(iterator->second);
   }
-  // Recordatory: I am are using '.' as an equivalent to epslin.
+  // Recordatory: I am are using '.' as an equivalent to epslon
   auto epsilon_range = stack_top_iterator->second.equal_range('.');
   for (auto iterator = epsilon_range.first; iterator != epsilon_range.second; ++iterator) {
-    possible_transitions.insert(iterator->second);
+    TransitionEffects transition = iterator->second;
+    // Needed to know if the entry string has to advance or not
+    transition.SetNotConsumedSymbol();
+    possible_transitions.insert(transition);
   }
 
   return possible_transitions;

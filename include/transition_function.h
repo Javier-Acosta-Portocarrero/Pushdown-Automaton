@@ -23,7 +23,7 @@ class TransitionFunction {
   TransitionFunction(const std::map<std::string, std::map<Symbol, std::multimap<Symbol, TransitionEffects>>>& transition_table) 
       :  inner_transition_table_{transition_table} {}
 
-  std::set<TransitionEffects> GetPossibleTransitions(const std::string& state, Symbol stack_top, Symbol entry_symbol) const;
+  std::set<TransitionEffects> GetPossibleTransitions(const InstantaneousDescription& requirements) const;
   void AddNewTransition(const InstantaneousDescription& requirements, const TransitionEffects& output);
  private:
   std::map<std::string, std::map<Symbol, std::multimap<Symbol, TransitionEffects>>> inner_transition_table_;

@@ -12,6 +12,13 @@
 #include "../include/input_string.h"
 
 /**
+ * 
+ */
+InputString::InputString() {
+  inner_string_ = new std::string("");
+}
+
+/**
  * @brief Returns the current input symbol.
  *
  * @return The current symbol, or '.' if the input string is empty (epsilon equivalent).
@@ -47,4 +54,11 @@ bool InputString::IsEmpty() const {
 void InputString::IntroduceNewInputWordByReference(const std::string& input_word) {
   inner_string_ = &input_word;
   current_position_ = 0;
+}
+
+/**
+ * 
+ */
+InputString InputString::GewStringCopyWithReference() const {
+  return InputString(*inner_string_, current_position_);
 }
