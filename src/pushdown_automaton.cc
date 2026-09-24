@@ -32,6 +32,11 @@ bool PushdownAutomaton::AcceptsWord(const std::string& input_word) {
  * 
  */
 bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string) const {
+  // The acceptance criterion of this pushdown automaton is having an empty stack and have consumed the whole input string.
+  if (current_stack.empty()) {
+    return current_string.IsEmpty();
+  }
+
   InstantaneousDescription current_instantaneous_description_(current_state, current_stack.top(), current_string.GetCurrentSymbol());
   if (trace_active_) {
     std::cout << std::setw(5) << current_state;
@@ -51,14 +56,6 @@ bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, std:
     }
   }
 
-  // The acceptance criterion of this pushdown automaton is having an empty stack and have consumed the whole input string.
-  if (current_stack.empty()) {
-    if (!current_string.IsEmpty()) {
-      return false;
-    }
-    return true;
-  }
-
   std::set<TransitionEffects> possible_transitions = inner_transition_function_.GetPossibleTransitions(current_instantaneous_description_);
   if (trace_active_) {
     for (const TransitionEffects& transition : possible_transitions) {
@@ -73,7 +70,7 @@ bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, std:
 
     std::stack<Symbol> new_branch_stack = current_stack;
     const std::string& new_stack_symbols = transition.GetStackInputSymbols();
-    for (size_t i = new_stack_symbols.size() - 1; i >= 0; --i) {
+    for (int i = new_stack_symbols.size() - 1; i >= 0; --i) {
       new_branch_stack.push(new_stack_symbols[i]);    
     }
 

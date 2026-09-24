@@ -25,7 +25,7 @@ InputString::InputString() {
  */
 Symbol InputString::GetCurrentSymbol() const {
   // Im using '.' as the equivalent to epsilon in a classic pushdown automaton.
-  return inner_string_ == nullptr? '.' : (*inner_string_)[current_position_];
+  return inner_string_ == nullptr || IsEmpty()? '.' : (*inner_string_)[current_position_];
 }
 
 /**
