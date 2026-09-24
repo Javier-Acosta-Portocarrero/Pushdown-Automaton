@@ -11,6 +11,10 @@
 
 #include "../../include/pushdown_automaton_load/pushdown_automaton_loader.h"
 
+/**
+ * @brief Loads a pushdown automaton using the specified loading strategy.
+ * @return Pushdown automaton loaded from the file.
+ */
 PushdownAutomaton PushdownAutomatonLoader::LoadPushdownAutomaton() const {
   return load_strategy_->LoadPushdownAutomaton(file_path_);
 }

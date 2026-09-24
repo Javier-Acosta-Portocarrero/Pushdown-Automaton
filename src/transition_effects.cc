@@ -11,6 +11,11 @@
 
 #include "../include/transition_effects.h"
 
+/**
+ * @brief Compares two TransitionEffects objects based on their identifiers.
+ * @param transition_to_compare The TransitionEffects object to compare with.
+ * @return true if the identifier of this object is less than the identifier of the other object or false if not.
+ */
 bool TransitionEffects::operator<(const TransitionEffects& transition_to_compare) const {
   return identifier_ < transition_to_compare.identifier_;
 }

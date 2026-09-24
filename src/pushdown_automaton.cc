@@ -15,7 +15,9 @@
 #include <iomanip>  // Needed for std::setw
 
 /**
- * 
+ * @brief Checks if the pushdown automaton accepts the given input word.
+ * @param input_word Input word to check.
+ * @return true if the automaton accepts the word or false if not.
  */
 bool PushdownAutomaton::AcceptsWord(const std::string& input_word) {
   unsigned output_width = input_word.size() + 2 < 18 ? 18 : input_word.size() + 2;
@@ -31,7 +33,13 @@ bool PushdownAutomaton::AcceptsWord(const std::string& input_word) {
 }
    
 /**
- * 
+ * @brief Recursively checks if the pushdown automaton can accept the given input, that happens when the 
+ *        stack is empty and the entire input string has been consumed.
+ * @param current_state The current state of the automaton.
+ * @param current_stack The current stack of the automaton.
+ * @param current_string The current input string.
+ * @param output_width The width of the output columns.
+ * @return true if the automaton can accept the input or false if not.
  */
 bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string, unsigned output_width) const {
   // The acceptance criterion of this pushdown automaton is having an empty stack and have consumed the whole input string.

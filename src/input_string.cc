@@ -12,7 +12,7 @@
 #include "../include/input_string.h"
 
 /**
- * 
+ * @brief Default constructor for the InputString class.
  */
 InputString::InputString() {
   inner_string_ = new std::string("");
@@ -57,7 +57,8 @@ void InputString::IntroduceNewInputWordByReference(const std::string& input_word
 }
 
 /**
- * 
+ * @brief Creates a copy of the InputString object with the same reference to the input word.
+ * @return A copy of the InputString object.
  */
 InputString InputString::GewStringCopyWithReference() const {
   return InputString(*inner_string_, current_position_);
