@@ -27,8 +27,7 @@ class PushdownAutomaton {
     const std::set<Symbol>& input_alphabet, const std::set<Symbol>& stack_alphabet,
     const Symbol& start_stack_symbol, const std::set<std::string>& automaton_states,
     const std::string& start_state, bool trace_active = false) 
-      : inner_transition_function_{inner_transition_function},
-      //original_input_string_{original_input_string}, 
+      : inner_transition_function_{inner_transition_function}, 
       input_alphabet_{input_alphabet}, stack_alphabet_{stack_alphabet}, start_stack_symbol_{start_stack_symbol},
       automaton_states_{automaton_states}, start_state_{start_state}, trace_active_{trace_active} {}
 
@@ -36,7 +35,6 @@ class PushdownAutomaton {
   void SetTraceActive(bool trace_flag) { trace_active_ = trace_flag;}
       
  private:
-  //const InputString original_input_string_;
   const TransitionFunction inner_transition_function_;
   const std::set<Symbol> input_alphabet_;
   const std::set<Symbol> stack_alphabet_;

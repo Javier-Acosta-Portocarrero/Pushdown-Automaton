@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
         if (!input_word.empty() && input_word.back() == '\r') {
           input_word.pop_back();
         }
-        std::cout << input_word << ": " << (automaton.AcceptsWord(input_word) ? "Accepted" : "Rejected") << std::endl;
+        std::cout << input_word << ": " << (automaton.AcceptsWord(input_word) ? "\nAccepted" : "\nRejected") << std::endl;
       }
 
     } else {
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
         if (input_word == "exit") {
           break;
         }
-        std::cout << (automaton.AcceptsWord(input_word) ? "Accepted" : "Rejected") << std::endl;
+        std::cout << (automaton.AcceptsWord(input_word) ? "\nAccepted" : "\nRejected") << std::endl;
       }
     }
     return 0;
