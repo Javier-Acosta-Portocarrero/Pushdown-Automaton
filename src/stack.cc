@@ -57,7 +57,7 @@ std::string Stack::GetStackContentAsString() const {
  */
 void Stack::Push(const Symbol& symbol) {
   if (!stack_alphabet_.contains(symbol)) {
-    throw std::runtime_error("The symbol \"" + std::to_string(symbol) + "\" to be pushed in the stack is not in the stack alphabet.");
+    throw std::runtime_error("The symbol \"" + std::string(1, symbol) + "\" to be pushed in the stack is not in the stack alphabet.");
   }
     stack_.push(symbol);
 }
