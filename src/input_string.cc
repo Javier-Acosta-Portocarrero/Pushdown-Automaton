@@ -11,11 +11,27 @@
 
 #include "../include/input_string.h"
 
+#include <stdexcept>
+
 /**
  * @brief Default constructor for the InputString class.
  */
-InputString::InputString() {
+InputString::InputString(const std::set<Symbol>& input_alphabet) : input_alphabet_{input_alphabet} {
   inner_string_ = new std::string("");
+  current_position_ = 0;
+}
+
+/**
+ * @brief Constructor for the InputString class with an input word.
+ * @param input_word Input word to be processed.
+ * @param input_alphabet Set of symbols that form the input alphabet.
+ * @param current_position Current position in the input word (default is 0).
+ */
+InputString::InputString(const std::string& input_word, const std::set<Symbol>& input_alphabet, unsigned current_position) 
+    : inner_string_{&input_word}, current_position_{current_position}, input_alphabet_{input_alphabet} {
+  if (!CheckIfWholeInputWordIsInAlphabet(input_word)) {
+    throw std::runtime_error("The input word contains symbols that are not in the input alphabet.");
+  }
 }
 
 /**
@@ -52,6 +68,9 @@ bool InputString::IsEmpty() const {
  * @param input_word New input word.
  */
 void InputString::IntroduceNewInputWordByReference(const std::string& input_word) {
+  if (!CheckIfWholeInputWordIsInAlphabet(input_word)) {
+    throw std::runtime_error("The input word contains symbols that are not in the input alphabet.");
+  }
   inner_string_ = &input_word;
   current_position_ = 0;
 }
@@ -60,6 +79,20 @@ void InputString::IntroduceNewInputWordByReference(const std::string& input_word
  * @brief Creates a copy of the InputString object with the same reference to the input word.
  * @return A copy of the InputString object.
  */
-InputString InputString::GewStringCopyWithReference() const {
-  return InputString(*inner_string_, current_position_);
+InputString InputString::GetStringCopyWithReference() const {
+  return InputString(*inner_string_, input_alphabet_, current_position_);
+}
+
+/**
+ * @brief Checks if the entire input word is composed of symbols from the input alphabet.
+ * @param input_word Input word to be checked.
+ * @return true if the input word is valid, false otherwise.
+ */
+bool InputString::CheckIfWholeInputWordIsInAlphabet(const std::string& input_word) const {
+  for (const Symbol& symbol : input_word) {
+    if (!input_alphabet_.contains(symbol)) {
+      return false;
+    }
+  }
+  return true;
 }

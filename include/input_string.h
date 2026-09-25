@@ -13,18 +13,18 @@
 #define INPUT_STRING_H
 
 #include <string>
+#include <set>
 
 using Symbol = char;
 
 class InputString {
  public:
-  InputString();
-  InputString(const std::string& input_word, unsigned current_position = 0) 
-      : inner_string_{&input_word}, current_position_{current_position} {}
+  InputString(const std::set<Symbol>& input_alphabet);
+  InputString(const std::string& input_word, const std::set<Symbol>& input_alphabet, unsigned current_position = 0);
 
   Symbol GetCurrentSymbol() const;
   const std::string& GetInputWordReference() const { return *inner_string_;}
-  InputString GewStringCopyWithReference() const;
+  InputString GetStringCopyWithReference() const;
   unsigned GetCurrentPositionIndex() const { return current_position_;}
 
   void AdvanceString();
@@ -34,6 +34,11 @@ class InputString {
  private:
   const std::string* inner_string_ = nullptr;
   unsigned current_position_ = 0;
+  // I use a reference because a lot of InputString objects will be created during the execution of the program (it is recursive), 
+  // and I don't want to copy the input alphabet every time.
+  const std::set<Symbol>& input_alphabet_;
+
+  bool CheckIfWholeInputWordIsInAlphabet(const std::string& input_word) const;
 };
 
 #endif

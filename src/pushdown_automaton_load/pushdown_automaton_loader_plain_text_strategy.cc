@@ -69,8 +69,7 @@ PushdownAutomaton PushdownAutomatonLoaderPlainTextStrategy::LoadPushdownAutomato
     ++transition_identifier;
   }
 
-  InputString unused_input_string;
-  return PushdownAutomaton{unused_input_string, transition_function, input_alphabet, stack_alphabet, start_stack_symbol, automaton_states, start_state};
+  return PushdownAutomaton{transition_function, input_alphabet, stack_alphabet, start_stack_symbol, automaton_states, start_state};
 }
 
 /**

@@ -23,7 +23,7 @@ using Symbol = char;
 // Empty stack version of a pushdown automaton
 class PushdownAutomaton {
  public:
-  PushdownAutomaton(const InputString& original_input_string, const TransitionFunction& inner_transition_function,
+  PushdownAutomaton(const TransitionFunction& inner_transition_function,
     const std::set<Symbol>& input_alphabet, const std::set<Symbol>& stack_alphabet,
     const Symbol& start_stack_symbol, const std::set<std::string>& automaton_states,
     const std::string& start_state, bool trace_active = false) 
@@ -36,12 +36,12 @@ class PushdownAutomaton {
       
  private:
   const TransitionFunction inner_transition_function_;
-  const std::set<Symbol> input_alphabet_;
+  const std::set<std::string> automaton_states_;
   // Doesn't contain a stack or input string because of the recursive nature of this program,
   // only has the necessary data to build all the stacks and input string during the execution
   const std::set<Symbol> stack_alphabet_;
   const Symbol start_stack_symbol_;
-  const std::set<std::string> automaton_states_;
+  const std::set<Symbol> input_alphabet_;
   const std::string start_state_;
 
   bool trace_active_;

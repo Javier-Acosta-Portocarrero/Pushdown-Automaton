@@ -25,7 +25,7 @@ bool PushdownAutomaton::AcceptsWord(const std::string& input_word) {
     std::cout << std::left << "\n" << std::setw(output_width) << "State" << std::setw(output_width) << "Input String"
               << std::setw(output_width) << "Stack" << std::setw(output_width) << "Transitions" << std::endl;
   }
-  InputString initial_string{input_word};
+  InputString initial_string{input_word, input_alphabet_};
   std::stack<Symbol> initial_stack = {};
   initial_stack.push(start_stack_symbol_);
 
@@ -88,7 +88,7 @@ bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, std:
     for (int i = new_stack_symbols.size() - 1; i >= 0; --i) {
       new_branch_stack.push(new_stack_symbols[i]);    
     }
-    InputString updated_input_string = current_string.GewStringCopyWithReference();
+    InputString updated_input_string = current_string.GetStringCopyWithReference();
     if (transition.ConsumesEntrySymbol()) {
       updated_input_string.AdvanceString();
     }
