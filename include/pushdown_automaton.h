@@ -37,10 +37,13 @@ class PushdownAutomaton {
  private:
   const TransitionFunction inner_transition_function_;
   const std::set<Symbol> input_alphabet_;
+  // Doesn't contain a stack or input string because of the recursive nature of this program,
+  // only has the necessary data to build all the stacks and input string during the execution
   const std::set<Symbol> stack_alphabet_;
   const Symbol start_stack_symbol_;
   const std::set<std::string> automaton_states_;
   const std::string start_state_;
+
   bool trace_active_;
 
   bool RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string, unsigned output_width) const;

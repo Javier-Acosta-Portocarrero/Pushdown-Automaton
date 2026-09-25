@@ -94,13 +94,6 @@ bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, std:
     }
 
     if (RecursiveChecking(next_state, new_branch_stack, updated_input_string, output_width)) {
-      /*if (trace_active_) {
-        std::cout << std::setw(output_width) << next_state;
-        const std::string& tmp_input_word = current_string.GetInputWordReference();
-        std::cout << std::setw(output_width) << updated_input_string.GetInputWordReference().substr(current_string.GetCurrentPositionIndex());
-        // If it is accepted, the stack must be empty
-        std::cout << std::setw(output_width) << '.' << std::setw(output_width) << "-" << std::endl;
-      }*/
       return true;
     }
   }
