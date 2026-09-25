@@ -15,6 +15,7 @@
 #include "transition_function.h"
 #include "input_string.h"
 #include "instantaneous_description.h"
+#include "stack.h"
 
 #include <stack>
 
@@ -46,7 +47,7 @@ class PushdownAutomaton {
 
   bool trace_active_;
 
-  bool RecursiveChecking(const std::string& current_state, std::stack<Symbol>& current_stack, const InputString& current_string, unsigned output_width) const;
+  bool RecursiveChecking(const std::string& current_state, Stack& current_stack, const InputString& current_string, unsigned output_width) const;
 };
 
 #endif

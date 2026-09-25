@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++23
 TARGET = build/pushdown_automaton
 
 SOURCES = src/pushdown_automaton_load/pushdown_automaton_loader_plain_text_strategy.cc src/pushdown_automaton_load/pushdown_automaton_loader.cc\
-          src/input_string.cc src/main.cc src/pushdown_automaton.cc src/transition_effects.cc src/transition_function.cc
+          src/input_string.cc src/main.cc src/pushdown_automaton.cc src/transition_effects.cc src/transition_function.cc src/stack.cc
 
 OBJECTS = $(SOURCES:%.cc=build/%.o)
 
