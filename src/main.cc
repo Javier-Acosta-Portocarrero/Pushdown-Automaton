@@ -74,6 +74,9 @@ int main(int argc, char* argv[]) {
       throw std::runtime_error("Missing -trace option.");
     }
 
+    std::cout << "This empty-stack-focused pushdown automaton has a DFS behaviour and executes the transitions.\n"
+              << "in ascending order by ID. The transitions that appear earlier in the input file have a smaller ID.\n";
+
     PushdownAutomatonLoaderPlainTextStrategy plain_text_strategy;
     PushdownAutomatonLoader loader{&plain_text_strategy, config_file};
     PushdownAutomaton automaton = loader.LoadPushdownAutomaton();
