@@ -10,6 +10,7 @@
 // Contains the implementation of the Stack class.
 
 #include "../include/stack.h"
+#include "../include/exceptions/stack_exception.h"
 
 #include <stdexcept>
 
@@ -20,7 +21,7 @@
  */
 Stack::Stack(const std::set<Symbol>& stack_alphabet, Symbol start_stack_symbol) : stack_alphabet_(stack_alphabet) {
   if (!stack_alphabet_.contains(start_stack_symbol)) {
-    throw std::runtime_error("The start stack symbol \"" + std::string(1, start_stack_symbol) + "\" is not in the stack alphabet.");
+    throw StackException("The start stack symbol \"" + std::string(1, start_stack_symbol) + "\" is not in the stack alphabet.");
   }
   stack_.push(start_stack_symbol);
 }
@@ -57,7 +58,7 @@ std::string Stack::GetStackContentAsString() const {
  */
 void Stack::Push(const Symbol& symbol) {
   if (!stack_alphabet_.contains(symbol)) {
-    throw std::runtime_error("The symbol \"" + std::string(1, symbol) + "\" to be pushed in the stack is not in the stack alphabet.");
+    throw StackException("The symbol \"" + std::string(1, symbol) + "\" to be pushed in the stack is not in the stack alphabet.");
   }
     stack_.push(symbol);
 }
@@ -68,7 +69,7 @@ void Stack::Push(const Symbol& symbol) {
  */
 Symbol Stack::Pop() {
   if (stack_.empty()) {
-    throw std::runtime_error("Cant pop from an empty stack.");
+    throw StackException("Cant pop from an empty stack.");
   }
   Symbol top_symbol = stack_.top();
   stack_.pop();
@@ -81,7 +82,7 @@ Symbol Stack::Pop() {
  */
 Symbol Stack::Top() const {
   if (stack_.empty()) {
-    throw std::runtime_error("Cant get the top symbol of an empty stack.");
+    throw StackException("Cant get the top symbol of an empty stack.");
   }
   return stack_.top();
 }

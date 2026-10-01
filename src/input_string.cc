@@ -10,6 +10,7 @@
 // Contains the implementation of the InputString class.
 
 #include "../include/input_string.h"
+#include "../include/exceptions/input_string_exception.h"
 
 #include <stdexcept>
 
@@ -30,7 +31,7 @@ InputString::InputString(const std::set<Symbol>& input_alphabet) : input_alphabe
 InputString::InputString(const std::string& input_word, const std::set<Symbol>& input_alphabet, unsigned current_position) 
     : inner_string_{&input_word}, current_position_{current_position}, input_alphabet_{input_alphabet} {
   if (!CheckIfWholeInputWordIsInAlphabet(input_word)) {
-    throw std::runtime_error("The input word contains symbols that are not in the input alphabet.");
+    throw InputStringException("The input word contains symbols that are not in the input alphabet.");
   }
 }
 
@@ -69,7 +70,7 @@ bool InputString::IsEmpty() const {
  */
 void InputString::IntroduceNewInputWordByReference(const std::string& input_word) {
   if (!CheckIfWholeInputWordIsInAlphabet(input_word)) {
-    throw std::runtime_error("The input word contains symbols that are not in the input alphabet.");
+    throw InputStringException("The input word contains symbols that are not in the input alphabet.");
   }
   inner_string_ = &input_word;
   current_position_ = 0;

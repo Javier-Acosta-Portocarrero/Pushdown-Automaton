@@ -10,6 +10,7 @@
 // Contains the implementation of the PushdownAutomatonLoaderPlainTextStrategy class.
 
 #include "../../include/pushdown_automaton_load/pushdown_automaton_loader_plain_text_strategy.h"
+#include "../../include/exceptions/input_exception.h"
 
 #include <fstream>
 #include <sstream>
@@ -23,7 +24,7 @@
 PushdownAutomaton PushdownAutomatonLoaderPlainTextStrategy::LoadPushdownAutomaton(const std::string& file_path) const {
   std::ifstream input_file{file_path};
   if (!input_file.is_open()) {
-    throw std::runtime_error("Could not open file '" + file_path + "'.");
+    throw InputException("Could not open file '" + file_path + "'.");
   }
   unsigned line_number = 0;
 
@@ -40,20 +41,20 @@ PushdownAutomaton PushdownAutomatonLoaderPlainTextStrategy::LoadPushdownAutomato
   const std::string start_state = ReadSingleElement(start_state_line, line_number, "initial state");
 
   if (!automaton_states.contains(start_state)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": state '" + start_state + "' is not an automaton state.");
+    throw InputException("Line " + std::to_string(line_number) + ": state '" + start_state + "' is not an automaton state.");
   }
 
   const std::string start_stack_symbol_line = GetNextContentLine(input_file, line_number, "the initial stack symbol");
   const std::string start_stack_symbol_string = ReadSingleElement(start_stack_symbol_line, line_number, "initial stack symbol");
   if (start_stack_symbol_string.size() != 1) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": the initial stack symbol must be one character.");
+    throw InputException("Line " + std::to_string(line_number) + ": the initial stack symbol must be one character.");
   }
   const Symbol start_stack_symbol = start_stack_symbol_string[0];
   if (start_stack_symbol == '.') {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": the initial stack symbol cannot be epsilon.");
+    throw InputException("Line " + std::to_string(line_number) + ": the initial stack symbol cannot be epsilon.");
   }
   if (!stack_alphabet.contains(start_stack_symbol)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": initial stack symbol '" + start_stack_symbol_string + "' is not in the stack alphabet.");
+    throw InputException("Line " + std::to_string(line_number) + ": initial stack symbol '" + start_stack_symbol_string + "' is not in the stack alphabet.");
   }
 
   TransitionFunction transition_function;
@@ -90,7 +91,7 @@ std::string PushdownAutomatonLoaderPlainTextStrategy::GetNextContentLine(std::if
     }
   }
 
-  throw std::runtime_error("Unexpected end of file, expected " + expected_content + ".");
+  throw InputException("Unexpected end of file, expected " + expected_content + ".");
 }
 
 /**
@@ -125,12 +126,12 @@ std::set<std::string> PushdownAutomatonLoaderPlainTextStrategy::ReadStates(const
   std::string state;
   while (line_stream >> state) {
     if (states.contains(state)) {
-      throw std::runtime_error("Line " + std::to_string(line_number) + ": state '" + state + "' is repeated.");
+      throw InputException("Line " + std::to_string(line_number) + ": state '" + state + "' is repeated.");
     }
     states.insert(state);
   }
   if (states.empty()) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": there must be at least one state.");
+    throw InputException("Line " + std::to_string(line_number) + ": there must be at least one state.");
   }
 
   return states;
@@ -150,20 +151,20 @@ std::set<Symbol> PushdownAutomatonLoaderPlainTextStrategy::ReadAlphabet(const st
 
   while (line_stream >> symbol_string) {
     if (symbol_string.size() != 1) {
-      throw std::runtime_error("Line " + std::to_string(line_number) + ": symbol '" + symbol_string + "' in the " + alphabet_name + " must be one character.");
+      throw InputException("Line " + std::to_string(line_number) + ": symbol '" + symbol_string + "' in the " + alphabet_name + " must be one character.");
     }
     const Symbol symbol = symbol_string[0];
     if (symbol == '.') {
-      throw std::runtime_error("Line " + std::to_string(line_number) + ": '.' is epsilon, it cannot be part of the " + alphabet_name + ".");
+      throw InputException("Line " + std::to_string(line_number) + ": '.' is epsilon, it cannot be part of the " + alphabet_name + ".");
     }
     if (alphabet.contains(symbol)) {
-      throw std::runtime_error("Line " + std::to_string(line_number) + ": symbol '" + symbol_string + "' is repeated in the " + alphabet_name + ".");
+      throw InputException("Line " + std::to_string(line_number) + ": symbol '" + symbol_string + "' is repeated in the " + alphabet_name + ".");
     }
 
     alphabet.insert(symbol);
   }
   if (alphabet.empty()) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": the " + alphabet_name + " cannot be empty.");
+    throw InputException("Line " + std::to_string(line_number) + ": the " + alphabet_name + " cannot be empty.");
   }
 
   return alphabet;
@@ -182,10 +183,10 @@ std::string PushdownAutomatonLoaderPlainTextStrategy::ReadSingleElement(const st
   std::string extra_element;
 
   if (!(line_stream >> element)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": expected " + element_name + ".");
+    throw InputException("Line " + std::to_string(line_number) + ": expected " + element_name + ".");
   }
   if (line_stream >> extra_element) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": there should only be one " + element_name + ".");
+    throw InputException("Line " + std::to_string(line_number) + ": there should only be one " + element_name + ".");
   }
 
   return element;
@@ -213,36 +214,36 @@ void PushdownAutomatonLoaderPlainTextStrategy::ReadTransition(const std::string&
   std::string stack_replacement;
   std::string extra_element;
   if (!(line_stream >> source_state >> input_symbol_string >> stack_top_string >> destination_state >> stack_replacement)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": bad transition format, expected 5 elements.");
+    throw InputException("Line " + std::to_string(line_number) + ": bad transition format, expected 5 elements.");
   }
   if (line_stream >> extra_element) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": bad transition format, expected only 5 elements.");
+    throw InputException("Line " + std::to_string(line_number) + ": bad transition format, expected only 5 elements.");
   }
 
   if (!automaton_states.contains(source_state)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": source state '" + source_state + "' is not an automaton state.");
+    throw InputException("Line " + std::to_string(line_number) + ": source state '" + source_state + "' is not an automaton state.");
   }
   if (!automaton_states.contains(destination_state)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": destination state '" + destination_state + "' is not an automaton state.");
+    throw InputException("Line " + std::to_string(line_number) + ": destination state '" + destination_state + "' is not an automaton state.");
   }
   if (input_symbol_string.size() != 1) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": input symbol '" + input_symbol_string + "' must be one character.");
+    throw InputException("Line " + std::to_string(line_number) + ": input symbol '" + input_symbol_string + "' must be one character.");
   }
 
   const Symbol input_symbol = input_symbol_string[0];
   if (input_symbol != '.' && !input_alphabet.contains(input_symbol)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": input symbol '" + input_symbol_string + "' is not in the input alphabet.");
+    throw InputException("Line " + std::to_string(line_number) + ": input symbol '" + input_symbol_string + "' is not in the input alphabet.");
   }
   if (stack_top_string.size() != 1) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": stack symbol '" + stack_top_string + "' must be one character.");
+    throw InputException("Line " + std::to_string(line_number) + ": stack symbol '" + stack_top_string + "' must be one character.");
   }
 
   const Symbol stack_top = stack_top_string[0];
   if (stack_top == '.') {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": epsilon cannot be used as the stack top.");
+    throw InputException("Line " + std::to_string(line_number) + ": epsilon cannot be used as the stack top.");
   }
   if (!stack_alphabet.contains(stack_top)) {
-    throw std::runtime_error("Line " + std::to_string(line_number) + ": stack symbol '" + stack_top_string + "' is not in the stack alphabet.");
+    throw InputException("Line " + std::to_string(line_number) + ": stack symbol '" + stack_top_string + "' is not in the stack alphabet.");
   }
 
   if (stack_replacement == ".") {
@@ -250,7 +251,7 @@ void PushdownAutomatonLoaderPlainTextStrategy::ReadTransition(const std::string&
   } else {
     for (const Symbol symbol : stack_replacement) {
       if (!stack_alphabet.contains(symbol)) {
-        throw std::runtime_error("Line " + std::to_string(line_number) + ": symbol '" + std::string(1, symbol) + "' in '" + stack_replacement + "' is not in the stack alphabet.");
+        throw InputException("Line " + std::to_string(line_number) + ": symbol '" + std::string(1, symbol) + "' in '" + stack_replacement + "' is not in the stack alphabet.");
       }
     }
   }

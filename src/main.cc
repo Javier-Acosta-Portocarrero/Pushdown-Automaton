@@ -11,6 +11,7 @@
 
 #include "../include/pushdown_automaton_load/pushdown_automaton_loader.h"
 #include "../include/pushdown_automaton_load/pushdown_automaton_loader_plain_text_strategy.h"
+#include "../include/exceptions/input_exception.h"
 
 #include <fstream>
 #include <iostream>
@@ -33,14 +34,14 @@ int main(int argc, char* argv[]) {
       if (argument == "-config") {
         if (i + 1 >= argc) {
           parameter_error = true;
-          throw std::runtime_error("Missing file after -config.");
+          throw InputException("Missing file after -config.");
         }
         config_file = argv[++i];
 
       } else if (argument == "-trace") {
         if (i + 1 >= argc) {
           parameter_error = true;
-          throw std::runtime_error("Missing value after -trace.");
+          throw InputException("Missing value after -trace.");
         }
         const std::string trace_value = argv[++i];
         if (trace_value == "y") {
@@ -49,33 +50,33 @@ int main(int argc, char* argv[]) {
           trace_active = false;
         } else {
           parameter_error = true;
-          throw std::runtime_error("Trace value must be 'y' or 'n'.");
+          throw InputException("Trace value must be 'y' or 'n'.");
         }
         trace_option_found = true;
 
       } else if (argument == "-in") {
         if (i + 1 >= argc) {
           parameter_error = true;
-          throw std::runtime_error("Missing file after -in.");
+          throw InputException("Missing file after -in.");
         }
         input_file = argv[++i];
 
       } else {
         parameter_error = true;
-        throw std::runtime_error("Unknown option '" + argument + "'.");
+        throw InputException("Unknown option '" + argument + "'.");
       }
     }
     if (config_file.empty()) {
       parameter_error = true;
-      throw std::runtime_error("Missing -config option.");
+      throw InputException("Missing -config option.");
     }
     if (!trace_option_found) {
       parameter_error = true;
-      throw std::runtime_error("Missing -trace option.");
+      throw InputException("Missing -trace option.");
     }
 
     std::cout << "This empty-stack-focused pushdown automaton has a DFS behaviour and executes the transitions.\n"
-              << "in ascending order by ID. The transitions that appear earlier in the input file have a smaller ID.\n";
+              << "in ascending order by ID. The transitions that appear earlier in the input file have a smaller ID.\n\n";
 
     PushdownAutomatonLoaderPlainTextStrategy plain_text_strategy;
     PushdownAutomatonLoader loader{&plain_text_strategy, config_file};
@@ -84,7 +85,7 @@ int main(int argc, char* argv[]) {
     if (!input_file.empty()) {
       std::ifstream words_file{input_file};
       if (!words_file.is_open()) {
-        throw std::runtime_error("Could not open input file '" + input_file + "'.");
+        throw InputException("Could not open input file '" + input_file + "'.");
       }
       std::string input_word;
       while (std::getline(words_file, input_word)) {
