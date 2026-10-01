@@ -16,6 +16,7 @@
 #include "input_string.h"
 #include "instantaneous_description.h"
 #include "stack.h"
+#include "pushdown_automaton_tracer.h"
 
 #include <stack>
 
@@ -30,7 +31,7 @@ class PushdownAutomaton {
     const std::string& start_state, bool trace_active = false) 
       : inner_transition_function_{inner_transition_function}, 
       input_alphabet_{input_alphabet}, stack_alphabet_{stack_alphabet}, start_stack_symbol_{start_stack_symbol},
-      automaton_states_{automaton_states}, start_state_{start_state}, trace_active_{trace_active} {}
+      automaton_states_{automaton_states}, start_state_{start_state}, trace_active_{trace_active}, tracer_{} {}
 
   bool AcceptsWord(const std::string& input_word);
   void SetTraceActive(bool trace_flag) { trace_active_ = trace_flag;}
@@ -46,6 +47,7 @@ class PushdownAutomaton {
   const std::string start_state_;
 
   bool trace_active_;
+  const PushdownAutomatonTracer tracer_;
 
   bool RecursiveChecking(const std::string& current_state, Stack& current_stack, const InputString& current_string, unsigned output_width) const;
 };

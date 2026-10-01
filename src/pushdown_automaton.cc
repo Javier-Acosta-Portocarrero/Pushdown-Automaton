@@ -11,9 +11,6 @@
 
 #include "../include/pushdown_automaton.h"
 
-#include <iostream>
-#include <iomanip>  // Needed for std::setw
-
 /**
  * @brief Checks if the pushdown automaton accepts the given input word.
  * @param input_word Input word to check.
@@ -22,8 +19,7 @@
 bool PushdownAutomaton::AcceptsWord(const std::string& input_word) {
   unsigned output_width = input_word.size() + 2 < 18 ? 18 : input_word.size() + 2;
   if (trace_active_) {
-    std::cout << std::left << "\n" << std::setw(output_width) << "State" << std::setw(output_width) << "Input String"
-              << std::setw(output_width) << "Stack" << std::setw(output_width) << "Transitions" << std::endl;
+    tracer_.PrintHeader(output_width);
   }
   InputString initial_string{input_word, input_alphabet_};
   Stack initial_stack{stack_alphabet_, start_stack_symbol_};
@@ -42,17 +38,7 @@ bool PushdownAutomaton::AcceptsWord(const std::string& input_word) {
  */
 bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, Stack& current_stack, const InputString& current_string, unsigned output_width) const {
   if (trace_active_) {
-    std::cout << std::setw(output_width) << current_state;
-    if (current_string.IsEmpty()) {
-      std::cout << std::setw(output_width) << '.';
-    } else {
-      const std::string& tmp_input_word = current_string.GetInputWordReference();
-      std::cout << std::setw(output_width) << tmp_input_word.substr(current_string.GetCurrentPositionIndex());
-    }
-    std::cout << std::setw(output_width) << current_stack.GetStackContentAsString();
-    if (current_stack.IsEmpty()) {  // If the stack is empty, there cant be any possible transitions
-      std::cout << std::setw(output_width) << '-' << std::endl;
-    }
+    tracer_.PrintCurrentConfiguration(current_state, current_stack, current_string, output_width);
   }
   // The acceptance criterion of this pushdown automaton is having an empty stack and have consumed the whole input string.
   if (current_stack.IsEmpty()) {
@@ -63,14 +49,7 @@ bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, Stac
   std::set<TransitionEffects> possible_transitions = inner_transition_function_.GetPossibleTransitions(current_instantaneous_description_);
   // Trace part of the possible transitions, printed by id and separated by 1 space
   if (trace_active_) {
-    std::string transitions_id = "";
-    for (const TransitionEffects& transition : possible_transitions) {
-      transitions_id += std::to_string(transition.GetIdentifier()) + ' ';
-    }
-    if (transitions_id == "") {
-      transitions_id = "-";
-    }
-    std::cout << std::setw(output_width) << transitions_id << std::endl;
+    tracer_.PrintPossibleTransitions(possible_transitions, output_width);
   }
 
   current_stack.Pop();
