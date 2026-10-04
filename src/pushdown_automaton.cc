@@ -55,6 +55,7 @@ bool PushdownAutomaton::RecursiveChecking(const std::string& current_state, Stac
   current_stack.Pop();
   for (const TransitionEffects& transition : possible_transitions) {
     const std::string& next_state = transition.GetDestinyState();
+    // FALTA THROW ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     Stack new_branch_stack = current_stack.GetStackCopy();
     const std::string& new_stack_symbols = transition.GetStackInputSymbols();
     // I do it in this order because the first symbol of the string must be the top of the stack
