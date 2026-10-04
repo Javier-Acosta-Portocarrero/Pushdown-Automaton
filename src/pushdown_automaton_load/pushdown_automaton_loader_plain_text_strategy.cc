@@ -257,6 +257,6 @@ void PushdownAutomatonLoaderPlainTextStrategy::ReadTransition(const std::string&
   }
 
   InstantaneousDescription requirements{source_state, stack_top, input_symbol};
-  TransitionEffects effects{stack_replacement, source_state, destination_state, transition_identifier};
+  TransitionEffects effects{stack_replacement, destination_state, transition_identifier};
   transition_function.AddNewTransition(requirements, effects);
 }
