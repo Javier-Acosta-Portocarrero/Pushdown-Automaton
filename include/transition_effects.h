@@ -18,7 +18,7 @@ using Symbol = char;
 
 class TransitionEffects {
  public:
-  TransitionEffects(std::string stack_input_symbols, const std::string& current_state, std::string destiny_state, unsigned identifier) 
+  TransitionEffects(const std::string& stack_input_symbols, const std::string& destiny_state, unsigned identifier) 
       :  identifier_{identifier}, destiny_state_{destiny_state},  stack_input_symbols_{stack_input_symbols} {}
 
   unsigned GetIdentifier() const { return identifier_;}
