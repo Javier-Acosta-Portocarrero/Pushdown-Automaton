@@ -16,6 +16,9 @@
 
 using Symbol = char;
 
+/** 
+ * @brief Struct representing the instantaneous description of the pushdown automaton.
+ */
 struct InstantaneousDescription {
   InstantaneousDescription(const std::string& state, Symbol stack_top, Symbol entry_symbol) 
       : state_{state}, stack_top_{stack_top}, entry_symbol_{entry_symbol} {}

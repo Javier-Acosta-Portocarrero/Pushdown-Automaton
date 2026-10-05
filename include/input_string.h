@@ -17,6 +17,9 @@
 
 using Symbol = char;
 
+/** 
+ * @brief Class representing the input string for the pushdown automaton.
+ */
 class InputString {
  public:
   InputString(const std::set<Symbol>& input_alphabet);

@@ -14,6 +14,9 @@
 
 #include "../pushdown_automaton.h"
 
+/** 
+ * @brief Class representing the strategy for loading the pushdown automaton.
+ */
 class PushdownAutomatonLoaderStrategy {
  public:
   virtual ~PushdownAutomatonLoaderStrategy() = default;

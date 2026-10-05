@@ -16,6 +16,9 @@
 #include "input_string.h"
 #include "stack.h"
 
+/** 
+ * @brief Class representing the tracer for the pushdown automaton.
+ */
 class PushdownAutomatonTracer {
  public:
   void PrintHeader(unsigned output_width) const;

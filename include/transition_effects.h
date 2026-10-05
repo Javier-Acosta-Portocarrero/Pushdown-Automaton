@@ -6,8 +6,8 @@
 // Assignment 1: Pushdown Automaton
 // Author: Javier Acosta Portocarrero
 // Date: 20/09/2026
-// File transition.h: declaration file.
-// Contains the declaration of the Transition class.
+// File transition_effects.h: declaration file.
+// Contains the declaration of the TransitionEffects class.
 
 #ifndef TRANSITION_EFFECT_H
 #define TRANSITION_EFFECT_H
@@ -16,6 +16,9 @@
 
 using Symbol = char;
 
+/** 
+ * @brief Class representing the effects of a transition in the pushdown automaton.
+ */
 class TransitionEffects {
  public:
   TransitionEffects(const std::string& stack_input_symbols, const std::string& destiny_state, unsigned identifier) 

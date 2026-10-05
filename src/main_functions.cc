@@ -16,7 +16,13 @@
 #include <iostream>
 
 /**
- * 
+ * @brief Reads the program arguments and sets the corresponding variables.
+ * @param argc Number of command line arguments.
+ * @param argv Array of command line arguments.
+ * @param config_file Reference to the variable that will hold the configuration file path.
+ * @param input_file Reference to the variable that will hold the input file path.
+ * @param trace_active Reference to the variable that will indicate if tracing is active.
+ * @param parameter_error Reference to the variable that will indicate if there was a parameter error.
  */
 void ReadProgramArguments(int argc, char* argv[], std::string& config_file, std::string& input_file, bool& trace_active, bool& parameter_error) {
   bool trace_option_found = false;
@@ -68,7 +74,9 @@ void ReadProgramArguments(int argc, char* argv[], std::string& config_file, std:
 }
 
 /**
- * 
+ * @brief Executes the input file and processes each word.
+ * @param automaton Reference to the pushdown automaton.
+ * @param input_file Path to the input file.
  */
 void ExecuteInputFile(PushdownAutomaton& automaton, const std::string& input_file) {
   std::ifstream words_file{input_file};
@@ -85,7 +93,8 @@ void ExecuteInputFile(PushdownAutomaton& automaton, const std::string& input_fil
 }
 
 /**
- * 
+ * @brief Executes the keyboard input and processes each word.
+ * @param automaton Reference to the pushdown automaton.
  */
 void ExecuteKeyboardInput(PushdownAutomaton& automaton) {
   std::string input_word;

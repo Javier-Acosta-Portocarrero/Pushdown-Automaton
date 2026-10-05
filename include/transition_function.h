@@ -20,6 +20,9 @@
 
 using Symbol = char;
 
+/** 
+ * @brief Class representing the transition function of the pushdown automaton.
+ */
 class TransitionFunction {
  public:
   TransitionFunction() = default;

@@ -18,6 +18,9 @@
 
 using Symbol = char;
 
+/** 
+ * @brief Class representing the stack of the pushdown automaton.
+ */
 class Stack {
  public:
   Stack(const std::set<Symbol>& stack_alphabet, Symbol start_stack_symbol);

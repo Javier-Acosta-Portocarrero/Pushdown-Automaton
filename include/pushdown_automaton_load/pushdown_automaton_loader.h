@@ -15,6 +15,9 @@
 #include "../pushdown_automaton.h"
 #include "pushdown_automaton_loader_strategy.h"
 
+/** 
+ * @brief Class representing the loader for the pushdown automaton.
+ */
 class PushdownAutomatonLoader {
  public:
   PushdownAutomatonLoader(PushdownAutomatonLoaderStrategy* load_strategy, const std::string& file_path = "") 

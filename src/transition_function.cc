@@ -13,7 +13,9 @@
 
 
 /**
- * 
+ * @brief Retrieves the possible transitions based on the given instantaneous description.
+ * @param requirements The instantaneous description containing the current state, stack top, and entry symbol.
+ * @return A set of possible TransitionEffects that can be applied from the given requirements.
  */
 std::set<TransitionEffects> TransitionFunction::GetPossibleTransitions(const InstantaneousDescription& requirements) const {
   auto state_iterator = inner_transition_table_.find(requirements.state_);
@@ -45,7 +47,9 @@ std::set<TransitionEffects> TransitionFunction::GetPossibleTransitions(const Ins
 }
 
 /**
- * 
+ * @brief Adds a new transition to the transition function based on the given instantaneous description and transition effects.
+ * @param requirements The instantaneous description containing the current state, stack top, and entry symbol.
+ * @param output The TransitionEffects that define the effects of the transition.
  */
 void TransitionFunction::AddNewTransition(const InstantaneousDescription& requirements, const TransitionEffects& output) {
   inner_transition_table_[requirements.state_][requirements.stack_top_].insert(std::make_pair(requirements.entry_symbol_, output)); 

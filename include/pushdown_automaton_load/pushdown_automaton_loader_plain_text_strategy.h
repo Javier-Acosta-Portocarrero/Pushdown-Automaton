@@ -14,6 +14,9 @@
 
 #include "pushdown_automaton_loader_strategy.h"
 
+/** 
+ * @brief Class representing the plain text strategy for loading the pushdown automaton.
+ */
 class PushdownAutomatonLoaderPlainTextStrategy : public PushdownAutomatonLoaderStrategy {
  public:
   PushdownAutomatonLoaderPlainTextStrategy() = default;
